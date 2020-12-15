@@ -19,14 +19,3 @@ router.post('/suspend', validationSchema.suspend, apiController.suspend);
 router.post('/retrievefornotifications', validationSchema.retrieveForNotifications, apiController.retrieveForNotifications);
 
 module.exports = router;
-
-// module.exports = app => {
-
-//     app.post("/api/register", apiController.register);
-
-//     app.get("/api/commonstudents", apiService.getCommonStudentsOfTeachers);
-
-//     app.post("/api/suspend", apiService.suspendStudent);
-
-//     app.post("/api/retrievefornotifications", apiService.checkNotificationRecipients);
-// }

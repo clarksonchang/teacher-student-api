@@ -1,10 +1,8 @@
 ('use strict');
 
-const ApiService = require('../services/ApiService');
+const apiService = require('../services/apiService');
 const { check, validationResult } = require('express-validator');
 const HttpException = require('../utils/HttpException');
-
-const apiService = new ApiService();
 
 const register = async (req, res, next) => {
     try {

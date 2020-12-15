@@ -3,10 +3,10 @@
 ## Stack details
 
 -   App layer:
-    -   Backend: [Node.js](https://nodejs.org/en/download/) + [Express]()
-    -   Validator library: [express-validator]()
+    -   Backend: [Node.js](https://nodejs.org/en/download/) + [Express](http://expressjs.com/)
+    -   Validator library: [express-validator](https://express-validator.github.io/)
 -   Database layer: [MySQL](https://dev.mysql.com/downloads/mysql/)
--   Test Suite: [Mocha](https://dev.mysql.com/downloads/mysql/) + [Chai]()
+-   Test Suite: [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/)
 
 The production environment is hosted on AWS using Elastic Beanstalk and RDS.
 
@@ -51,13 +51,14 @@ If you want to test the endpoints without setup, use the production environment 
 
 5. Update the `.env` file with your local database configurations, using `env.example` as the template.  
    Contents of `.env.example` are shown below:
-   ```bash # DB Configurations (DEVELOPMENT ENV)
-   DB_HOST_DEVELOPMENT=localhost
-   DB_USER_DEVELOPMENT=root
-   DB_PASSWORD_DEVELOPMENT=password
-   DB_PORT_DEVELOPMENT=3306
-   DB_DATABASE_DEVELOPMENT=school_db
 
+    ```bash
+    # DB Configurations (DEVELOPMENT ENV)
+    DB_HOST_DEVELOPMENT=localhost
+    DB_USER_DEVELOPMENT=root
+    DB_PASSWORD_DEVELOPMENT=password
+    DB_PORT_DEVELOPMENT=3306
+    DB_DATABASE_DEVELOPMENT=school_db
 
     # DB Configurations (TEST ENV)
     DB_HOST_TEST=localhost
@@ -84,7 +85,19 @@ If you want to test the endpoints without setup, use the production environment 
     npm test
     ```
 
-7. If you ran the server in development mode, you can test that the server is alive and can respond.
+7. If you ran the server in development mode, you should see the following message:
+    ```
+    Server (DEVELOPMENT) is listening on port 3000
+    ```
+    Test that the server is responsive by opening a new terminal, and typing the following command
+    ```bash
+    curl localhost:3000/api
+    ```
+    You should get the following JSON response:
+    ```json
+    { "message": "I am alive" }
+    ```
+8. You can now proceed to use the endpoints defined in the next section.
 
 ## Link to API endpoints
 
@@ -97,6 +110,10 @@ For `production` environment, prepend `awslink` to the route.
 | 2   | GET    | /api/commonstudents           | Retrieve students who are registered to all of the given teachers |
 | 3   | POST   | /api/suspend                  | Suspend a specified student                                       |
 | 4   | POST   | /api/retrievefornotifications | Retrieve a list of students who can receive a given notification  |
+
+---
+
+---
 
 ## User stories given
 

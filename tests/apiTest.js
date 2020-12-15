@@ -5,7 +5,13 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
 const { expect } = require('chai');
-const sql = require('../db/db.js');
+const dotenv = require('dotenv');
+
+dotenv.config();
+if (process.env.DB_DATABASE_TEST !== 'test_school_db') {
+    console.log('The `test` environment is not configured properly, please check. Aborting test to prevent possible wipe of non-test data');
+    return;
+}
 
 const TEACHER_TABLE = 'teacher';
 const STUDENT_TABLE = 'student';
@@ -13,6 +19,7 @@ const TEACHER_STUDENT_TABLE = 'teacher_student';
 
 chai.use(chaiHttp);
 
+const sql = require('../db/db.js');
 const server = require('../server');
 
 describe('Test Suite for School API Endpoints', function() {
