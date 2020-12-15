@@ -1,4 +1,4 @@
-# Teacher-admin-api Assessment Submission
+# Teacher-student-api Assessment Submission
 
 ## Stack details
 
@@ -8,7 +8,7 @@
 -   Database layer: [MySQL](https://dev.mysql.com/downloads/mysql/)
 -   Test Suite: [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/)
 
-The production environment is hosted on AWS using Elastic Beanstalk and RDS.
+The production environment is hosted on AWS using an EC2 instance and RDS(MySQL). Note that it is hosted on AWS free tier and the service will probably have an outage when subject to load testing.
 
 ## Pre-requisites (for local setup)
 
@@ -50,7 +50,7 @@ If you want to test the endpoints without setup, use the production environment 
     - `test_school_db` (for `test` environment)
 
 5. Update the `.env` file with your local database configurations, using `env.example` as the template.  
-   Contents of `.env.example` are shown below:
+   Contents of `.env.example` are shown below. Remember to replace the values of DB_USER and DB_PASSWORD:
 
     ```bash
     # DB Configurations (DEVELOPMENT ENV)
@@ -97,13 +97,13 @@ If you want to test the endpoints without setup, use the production environment 
     ```json
     { "message": "I am alive" }
     ```
-8. You can now proceed to use the endpoints defined in the next section.
+8. You can now proceed to use the endpoints defined in the next section!
 
 ## Link to API endpoints
 
-For `development` environment, prepend `http://localhost:{PORT}` or `http://127.0.0.1:{PORT}` to the route. The default value for `{PORT}` should be `3000`.
+For the `development` environment, prepend `http://localhost:{PORT}` or `http://127.0.0.1:{PORT}` to the route. The default value for `{PORT}` should be `3000`.
 
-For `production` environment, prepend `ec2-13-212-44-191.ap-southeast-1.compute.amazonaws.com:3000` to the route.
+For the `production` environment, prepend `http://ec2-13-212-44-191.ap-southeast-1.compute.amazonaws.com:3000` to the route (e.g. `http://ec2-13-212-44-191.ap-southeast-1.compute.amazonaws.com:3000/api/register`)
 
 | #   | Method | Route                         | Description                                                      |
 | :-- | :----- | :---------------------------- | :--------------------------------------------------------------- |
@@ -240,7 +240,6 @@ For `production` environment, prepend `ec2-13-212-44-191.ap-southeast-1.compute.
     -   **Code:** `400 Bad Request`<br />
         **Content:** `{ message : <error message> }`
     -   **Code:** `304 Not Modified`<br />
-        **Content:** `{ message : <error message> }`
     -   **Code:** `404 Not Found`<br />
         **Content:** `{ message : <error message> }`
 
@@ -295,3 +294,9 @@ For `production` environment, prepend `ec2-13-212-44-191.ap-southeast-1.compute.
         **Content:** `{ message : <error message> }`
 
     <br>
+
+## Contributors
+
+---
+
+Clarkson Chang (github.com/clarksonchang)
