@@ -27,7 +27,7 @@ class ApiService {
 
     commonStudents(teacherList, callback) {
         let commonStudentsSql = `SELECT s.email FROM ${STUDENT_TABLE} s JOIN ${TEACHER_STUDENT_TABLE} ts ON s.student_id = ts.student_id 
-        JOIN ${TEACHER_TABLE} t ON t.teacher_id=ts.teacher_id where t.email IN (?)
+        JOIN ${TEACHER_TABLE} t ON t.teacher_id=ts.teacher_id where t.email IN (?) AND s.is_suspended = 0
         GROUP BY s.student_id HAVING count(distinct t.teacher_id) = ?`;
 
         let numberOfTeachers = typeof teacherList === 'string' ? 1 : teacherList.length;

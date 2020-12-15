@@ -23,8 +23,8 @@ USE `test_school_db` ;
 CREATE TABLE IF NOT EXISTS `test_school_db`.`student` (
   `student_id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
-  `is_suspended` BIT(1) NOT NULL DEFAULT b'0',
-  `is_deleted` BIT(1) NOT NULL DEFAULT b'0',
+  `is_suspended` TINYINT(1) NOT NULL DEFAULT b'0',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT b'0',
   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`student_id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
@@ -40,7 +40,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `test_school_db`.`teacher` (
   `teacher_id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
-  `is_deleted` BIT(1) NOT NULL DEFAULT b'0',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT b'0',
   `created_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`teacher_id`),
   UNIQUE INDEX `teacher_id_UNIQUE` (`teacher_id` ASC) VISIBLE,

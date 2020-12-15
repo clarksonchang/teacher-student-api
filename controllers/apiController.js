@@ -32,6 +32,7 @@ const commonStudents = async (req, res, next) => {
         // Validate request - this only checks for existence of the field, had to find workaround for running conditional validation of express-validator
         validate(req);
 
+        // console.log(req.query.teacher);
         // Parse request body
         let teacher = req.query.teacher;
 
