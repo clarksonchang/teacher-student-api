@@ -2,7 +2,6 @@
 
 const express = require('express');
 const dotenv = require('dotenv');
-const path = require('path');
 const bodyParser = require('body-parser');
 const router = require('./routes/apiRoutes');
 
@@ -17,10 +16,6 @@ let envString = process.env.NODE_ENV.toUpperCase();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
-// app.use('/', (req, res) => {
-//     res.send({ response: 'I am alive' }).status(200);
-// });
 
 app.use('/api', router);
 

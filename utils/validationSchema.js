@@ -1,6 +1,6 @@
 ('use strict');
 
-const { check, oneOf } = require('express-validator');
+const { check } = require('express-validator');
 
 exports.register = [
     check('teacher')
@@ -21,7 +21,7 @@ exports.register = [
     check('students.*')
         .isEmail()
         .normalizeEmail()
-        .withMessage('The objects in `students` array must be a valid email address')
+        .withMessage('The items in `students` array must be valid email addresses')
 ];
 
 exports.suspend = [
@@ -41,7 +41,7 @@ exports.suspend = [
 exports.commonStudents = [
     check('teacher')
         .exists()
-        .withMessage('Single teacher: query string must include the `teacher` field')
+        .withMessage('The query string must include the `teacher` field')
         .bail()
 ];
 

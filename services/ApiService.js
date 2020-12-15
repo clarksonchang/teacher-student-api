@@ -39,7 +39,7 @@ const commonStudents = (teacherList, callback) => {
             callback(err, null);
         } else {
             // console.log('Retrieved number of common students:', res.length);
-            // format results and pass back to controller
+            // Format results and pass back to controller
             let studentArr = [];
 
             res.forEach(result => studentArr.push(result.email));
@@ -70,7 +70,7 @@ const retrieveForNotifications = (teacher, notification, callback) => {
     let mentionedStudents = [];
     if (mentions != null) {
         mentions.forEach(mention => {
-            //strip away '@' symbol
+            // Strip away '@' symbol
             mentionedStudents.push(mention.substring(1));
         });
     }
@@ -87,7 +87,7 @@ const retrieveForNotifications = (teacher, notification, callback) => {
         } else {
             // console.log('Retrieved number of rows:', res.length);
 
-            // format results and pass back to controller
+            // Format results and pass back to controller
             let studentArr = [];
             res.forEach(result => studentArr.push(result.email));
             callback(null, { recipients: studentArr });

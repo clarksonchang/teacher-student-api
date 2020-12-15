@@ -2,7 +2,6 @@
 
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
-const path = require('path');
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
