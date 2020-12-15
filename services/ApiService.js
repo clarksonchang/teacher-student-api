@@ -1,3 +1,5 @@
+('use strict');
+
 const sql = require('../db/db.js');
 const TEACHER_TABLE = 'teacher';
 const STUDENT_TABLE = 'student';

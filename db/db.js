@@ -1,17 +1,20 @@
+('use strict');
+
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
 const path = require('path');
 
-dotenv.config({ path: path.resolve(__dirname, `../config/${process.env.ENVIRONMENT}.env`) });
-
-('use strict');
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config();
+}
+let envString = process.env.NODE_ENV.toUpperCase();
 
 const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    host: process.env['DB_HOST_' + envString],
+    database: process.env['DB_DATABASE_' + envString],
+    port: process.env['DB_PORT_' + envString],
+    user: process.env['DB_USER_' + envString],
+    password: process.env['DB_PASSWORD_' + envString],
     timezone: 'Z',
     multipleStatements: true
 });

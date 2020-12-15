@@ -1,7 +1,8 @@
+('use strict');
+
 const ApiService = require('../services/ApiService');
-const { matchedData, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const HttpException = require('../utils/HttpException');
-const { check, oneOf } = require('express-validator');
 
 const apiService = new ApiService();
 
@@ -130,16 +131,7 @@ const retrieveForNotifications = async (req, res, next) => {
 };
 
 const validate = req => {
-    // let givenNumberOfFields = Object.keys(req.body).length ? Object.keys(req.body).length : Object.keys(req.query).length;
-    // const data = matchedData(req);
-    // // console.log(Object.keys(data).length);
-
-    // if (Object.keys(data).length !== givenNumberOfFields) {
-    //     throw new HttpException(400, 'Bad request: Extraneous field(s)', {});
-    // }
-
     const errors = validationResult(req);
-    // console.log(errors);
 
     if (!errors.isEmpty()) {
         throw new HttpException(400, 'Bad request', errors);

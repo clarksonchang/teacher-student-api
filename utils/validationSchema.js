@@ -1,6 +1,6 @@
-const { check, oneOf } = require('express-validator');
-
 ('use strict');
+
+const { check, oneOf } = require('express-validator');
 
 exports.register = [
     check('teacher')

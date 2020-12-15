@@ -1,3 +1,5 @@
+('use strict');
+
 class HttpException extends Error {
     constructor(status, message, data) {
         super(message);
