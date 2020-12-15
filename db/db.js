@@ -9,19 +9,20 @@ if (process.env.NODE_ENV !== 'production') {
 }
 let envString = process.env.NODE_ENV.toUpperCase();
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
     host: process.env['DB_HOST_' + envString],
     database: process.env['DB_DATABASE_' + envString],
     port: process.env['DB_PORT_' + envString],
     user: process.env['DB_USER_' + envString],
     password: process.env['DB_PASSWORD_' + envString],
     timezone: 'Z',
-    multipleStatements: true
+    multipleStatements: true,
+    connectionLimit: 10
 });
 
-connection.connect(err => {
-    if (err) throw err;
-    // console.log('Connection to database established.');
-});
+// connection.connect(err => {
+//     if (err) throw err;
+//     // console.log('Connection to database established.');
+// });
 
-module.exports = connection;
+module.exports = pool;
