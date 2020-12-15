@@ -1,4 +1,4 @@
-# `teacher-admin-api` Assessment Submission
+# Teacher-admin-api Assessment Submission
 
 ## Stack details
 
@@ -102,155 +102,196 @@ If you want to test the endpoints without setup, use the production environment 
 ## Link to API endpoints
 
 For `development` environment, prepend `http://localhost:{PORT}` or `http://127.0.0.1:{PORT}` to the route. The default value for `{PORT}` should be `3000`.
-For `production` environment, prepend `awslink` to the route.
 
-| #   | Method | Route                         | Description                                                       |
-| :-- | :----- | :---------------------------- | :---------------------------------------------------------------- |
-| 1   | POST   | /api/register                 | Register one or more students to a specified teacher              |
-| 2   | GET    | /api/commonstudents           | Retrieve students who are registered to all of the given teachers |
-| 3   | POST   | /api/suspend                  | Suspend a specified student                                       |
-| 4   | POST   | /api/retrievefornotifications | Retrieve a list of students who can receive a given notification  |
+For `production` environment, prepend `ec2-13-212-44-191.ap-southeast-1.compute.amazonaws.com:3000` to the route.
+
+| #   | Method | Route                         | Description                                                      |
+| :-- | :----- | :---------------------------- | :--------------------------------------------------------------- |
+| 1   | POST   | /api/register                 | Register one/multiple students to a single specified teacher     |
+| 2   | GET    | /api/commonstudents           | Retrieve students who are registered to all teachers specified   |
+| 3   | POST   | /api/suspend                  | Suspend a specified student                                      |
+| 4   | POST   | /api/retrievefornotifications | Retrieve a list of students who can receive a given notification |
 
 ---
 
+<br>
+<br>
+<br>
+
+**1. Register one/multiple students to a single specified teacher**
+
 ---
 
-## User stories given
+-   **Brief Description**
 
-### 1. As a teacher, I want to register one or more students to a specified teacher.
+    This endpoint can be used to a single teacher to multiple students.  
+    If the teacher email does not exist in the database, it will be created. Similarly, if student emails provided that do not exist in the database will be created. Entities (teacher/student) that already exist will not be created. The students are then associated with the teacher after the creations of the non-existent entities.
 
-A teacher can register multiple students. A student can also be registered to multiple teachers.
+-   **URL**
 
--   Endpoint: `POST /api/register`
--   Headers: `Content-Type: application/json`
--   Success response status: HTTP 204
--   Request body example:
+    `/api/register`
 
-```
-{
-  "teacher": "teacherken@gmail.com"
-  "students":
-    [
-      "studentjon@gmail.com",
-      "studenthon@gmail.com"
-    ]
-}
-```
+-   **Method:**
 
-### 2. As a teacher, I want to retrieve a list of students common to a given list of teachers (i.e. retrieve students who are registered to ALL of the given teachers).
+    `POST`
 
--   Endpoint: `GET /api/commonstudents`
--   Success response status: HTTP 200
--   Request example 1: `GET /api/commonstudents?teacher=teacherken%40gmail.com`
--   Success response body 1:
+-   **Headers**
 
-```
-{
-  "students" :
-    [
-      "commonstudent1@gmail.com",
-      "commonstudent2@gmail.com",
-      "student_only_under_teacher_ken@gmail.com"
-    ]
-}
-```
+    `Content-Type: application/json`
 
--   Request example 2: `GET /api/commonstudents?teacher=teacherken%40gmail.com&teacher=teacherjoe%40gmail.com`
--   Success response body 2:
+-   **Data Params**
 
-```
-{
-  "students" :
-    [
-      "commonstudent1@gmail.com",
-      "commonstudent2@gmail.com"
-    ]
-}
-```
+    ```json
+    {
+        "teacher": "teacherken@gmail.com",
+        "students": ["studentjon@gmail.com", "studenthon@gmail.com"]
+    }
+    ```
 
-### 3. As a teacher, I want to suspend a specified student.
+-   **Success Response:**
 
--   Endpoint: `POST /api/suspend`
--   Headers: `Content-Type: application/json`
--   Success response status: HTTP 204
--   Request body example:
+    -   **Code:** `204 Created`<br />
 
-```
-{
-  "student" : "studentmary@gmail.com"
-}
-```
+-   **Error Response:**
 
-### 4. As a teacher, I want to retrieve a list of students who can receive a given notification.
+    -   **Code:** `400 Bad Request`<br />
+        **Content:** `{ message : <error message> }`
 
-A notification consists of:
+<br>
 
--   the teacher who is sending the notification, and
--   the text of the notification itself.
+**2. Retrieve students who are registered to all teachers specified**
 
-To receive notifications from e.g. 'teacherken@gmail.com', a student:
+---
 
--   MUST NOT be suspended,
--   AND MUST fulfill _AT LEAST ONE_ of the following:
-    1. is registered with “teacherken@gmail.com"
-    2. has been @mentioned in the notification
+-   **Brief Description**
 
-The list of students retrieved should not contain any duplicates/repetitions.
+    This endpoint is used to get the students who are under all teachers listed in the the parameters.  
+    Students who are marked as suspended will not show up in the returned list of students.  
+    If there are no common students, the endpoint will still return `200 OK`, with an empty array in the `students` field.
 
--   Endpoint: `POST /api/retrievefornotifications`
--   Headers: `Content-Type: application/json`
--   Success response status: HTTP 200
--   Request body example 1:
+-   **URL**
 
-```
-{
-  "teacher":  "teacherken@gmail.com",
-  "notification": "Hello students! @studentagnes@gmail.com @studentmiche@gmail.com"
-}
-```
+    `/api/commonstudents`
 
--   Success response body 1:
+-   **Method:**
 
-```
-{
-  "recipients":
-    [
-      "studentbob@gmail.com",
-      "studentagnes@gmail.com",
-      "studentmiche@gmail.com"
-    ]
-}
-```
+    `GET`
 
-In the example above, studentagnes@gmail.com and studentmiche@gmail.com can receive the notification from teacherken@gmail.com, regardless whether they are registered to him, because they are @mentioned in the notification text. studentbob@gmail.com however, has to be registered to teacherken@gmail.com.
+*   **Query Params**
 
--   Request body example 2:
+    `teacher=teacherken@gmail.com&teacher=teacherjoe@gmail.com`
 
-```
-{
-  "teacher":  "teacherken@gmail.com",
-  "notification": "Hey everybody"
-}
-```
+*   **Success Response:**
 
--   Success response body 2:
+    -   **Code:** `200 OK`<br />
+    -   **Body:**
 
-```
-{
-  "recipients":
-    [
-      "studentbob@gmail.com"
-    ]
-}
-```
+        ```json
+        {
+            "students": ["commonstudent1@gmail.com", "commonstudent2@gmail.com"]
+        }
+        ```
 
-## Error Responses
+*   **Error Response:**
 
-For all the above API endpoints, error responses should:
+    -   **Code:** `400 Bad Request`<br />
+        **Content:** `{ message : <error message> }`
 
--   have an appropriate HTTP response code
--   have a JSON response body containing a meaningful error message:
+    <br>
 
-```
-{ "message": "Some meaningful error message" }
-```
+**3. Suspend a specified student**
+
+---
+
+-   **Brief Description**
+
+    This endpoint can be used to update a single student's status to be suspended.
+    A successful suspension of a student using the endpoint returns `204 CREATED` without any content.
+
+    If the student email does not exist in the database, a `404 NOT FOUND` error will be returned.  
+    If you try to suspend a student that is already suspended, the endpoint returns `304 NOT MODIFIED`.
+
+-   **URL**
+
+    `/api/suspend`
+
+-   **Method:**
+
+    `POST`
+
+-   **Headers**
+
+    `Content-Type: application/json`
+
+-   **Data Params**
+
+    ```json
+    {
+        "student": "studentmary@gmail.com"
+    }
+    ```
+
+-   **Success Response:**
+
+    -   **Code:** `204 Created`<br />
+
+-   **Error Response:**
+
+    -   **Code:** `400 Bad Request`<br />
+        **Content:** `{ message : <error message> }`
+    -   **Code:** `304 Not Modified`<br />
+        **Content:** `{ message : <error message> }`
+    -   **Code:** `404 Not Found`<br />
+        **Content:** `{ message : <error message> }`
+
+<br>
+
+**4. Retrieve list of students that can receive notifications**
+
+---
+
+-   **Brief Description**
+
+    This endpoint can be used to check the students that can receive a given notification by a teacher.
+
+    Students who are suspended will not be included in the list as they should not receive any notifications.
+
+    If a non-existent student is mentioned, the email will not be included in the `recipients` list and the endpoint does not return any error.
+
+-   **URL**
+
+    `/api/retrievefornotifications`
+
+-   **Method:**
+
+    `POST`
+
+-   **Headers**
+
+    `Content-Type: application/json`
+
+-   **Data Params**
+
+    ```json
+    {
+        "teacher": "teacherken@gmail.com",
+        "notification": "Hey everybody"
+    }
+    ```
+
+-   **Success Response:**
+
+    -   **Code:** `200 OK`<br />
+        **Content:**
+        ```json
+        {
+            "recipients": ["studentbob@gmail.com", "studentagnes@gmail.com", "studentmiche@gmail.com"]
+        }
+        ```
+
+*   **Error Response:**
+
+    -   **Code:** `400 Bad Request`<br />
+        **Content:** `{ message : <error message> }`
+
+    <br>

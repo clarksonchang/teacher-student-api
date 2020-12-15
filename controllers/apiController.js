@@ -98,6 +98,16 @@ const suspend = async (req, res, next) => {
                     message: err.message || 'Internal Server Error'
                 });
             } else {
+                // console.log(data);
+                if (data.affectedRows === 0) {
+                    res.status(404).send({ message: `${student} does not exist in the system` });
+                    return;
+                }
+                if (data.affectedRows === 1 && data.changedRows === 0) {
+                    res.status(304).send({ message: `${student} was already suspended` });
+                    return;
+                }
+
                 res.status(204).send(data);
             }
         });

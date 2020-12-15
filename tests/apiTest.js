@@ -428,6 +428,36 @@ describe('Test Suite for School API Endpoints', function() {
                 });
         });
 
+        it('Returns [304 Not Modified] when try to suspend already suspended student', done => {
+            chai.request(server)
+                .post(suspendEndpoint)
+                .send({
+                    student: 'studentToBeSuspended@gmail.com'
+                })
+                .end((err, res) => {
+                    expect(err).to.not.exist;
+                    expect(res).to.have.property('body');
+                    expect(res).to.have.status(304);
+
+                    done();
+                });
+        });
+
+        it('Returns [404 Not Found] when try to suspend non-existent student', done => {
+            chai.request(server)
+                .post(suspendEndpoint)
+                .send({
+                    student: 'janedoe@gmail.com'
+                })
+                .end((err, res) => {
+                    expect(err).to.not.exist;
+                    expect(res).to.have.property('body');
+                    expect(res).to.have.status(404);
+
+                    done();
+                });
+        });
+
         it('Returns [400 Bad Request] due to empty payload', done => {
             chai.request(server)
                 .post(suspendEndpoint)
