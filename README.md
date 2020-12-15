@@ -297,6 +297,4 @@ For the `production` environment, prepend `http://ec2-13-212-44-191.ap-southeast
 
 ## Contributors
 
----
-
-Clarkson Chang (github.com/clarksonchang)
+[Clarkson Chang](https://github.com/clarksonchang);
